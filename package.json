@@ -1,0 +1,27 @@
+{
+  "name": "@shevsky/cache-deferred",
+  "version": "1.0.0",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build_es": "tsc -p . -d true --declarationDir dist/types --outDir dist/es",
+    "build_cjs": "tsc -p . --outDir dist/cjs -m commonjs",
+    "build": "npm run build_cjs && npm run build_es",
+    "postbuild": "node ./scripts/create-build-package-json.js && node ./scripts/copy-readme.js",
+    "release": "npm publish --access public dist"
+  },
+  "devDependencies": {
+    "typescript": "4.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shevsky/cache-deferred.git"
+  },
+  "author": "Konstantin Shevsky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Shevsky/cache-deferred.git/issues"
+  },
+  "homepage": "https://github.com/Shevsky/cache-deferred.git#readme"
+}
