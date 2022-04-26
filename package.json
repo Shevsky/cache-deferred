@@ -1,6 +1,6 @@
 {
   "name": "@shevsky/cache-deferred",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "cjs/index.js",
   "module": "es/index.js",
   "types": "types/index.d.ts",

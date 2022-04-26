@@ -23,19 +23,21 @@ function CacheDeferred<T extends Array<unknown>, S extends unknown>(
 
   target[CACHE_DEFERRED_BUFFER_SYMBOL][key] = bufferSymbol;
 
-  descriptor.value = function wrap(this: { [bufferSymbol]: Record<string, Promise<S>> }, ...args: T): Promise<S> {
+  descriptor.value = function wrap(this: { [bufferSymbol]: Record<string, S> }, ...args: T): Promise<S> {
     if (!(bufferSymbol in this)) {
       this[bufferSymbol] = {};
     }
 
     const argsKey = JSON.stringify(args);
     if (argsKey in this[bufferSymbol]) {
-      return this[bufferSymbol][argsKey];
+      return Promise.resolve(this[bufferSymbol][argsKey]);
     }
 
-    this[bufferSymbol][argsKey] = originalMethod.apply(this, args);
+    return originalMethod.apply(this, args).then((result: S): S => {
+      this[bufferSymbol][argsKey] = result;
 
-    return this[bufferSymbol][argsKey];
+      return result;
+    });
   };
 
   return descriptor;
